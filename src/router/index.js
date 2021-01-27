@@ -7,6 +7,12 @@ const routes = [
     name: "Home",
     component: Home,
   },
+  {
+    path: "/movie-preview/:id",
+    name: "moviePreview",
+    component: () => import("../views/MoviePreview"),
+    props: true,
+  },
 ];
 
 const router = createRouter({
