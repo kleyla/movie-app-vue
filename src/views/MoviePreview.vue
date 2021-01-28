@@ -10,7 +10,7 @@
           <h1>{{ movie.name }}</h1>
           <h3>{{ movie.year }}</h3>
           <h3>{{ movie.genre }}</h3>
-          <h3>
+          <h3 id="movie-rating">
             <span :style="{ 'background-color': getRatingColor() }">
               {{ movie.rating }}
             </span>
@@ -26,7 +26,7 @@
         </div>
         <div id="options">
           <button class="edit">Edit</button>
-          <button class="delete">Delete</button>
+          <button @click="deleteMovie" class="delete">Delete</button>
         </div>
       </div>
     </div>
@@ -35,8 +35,10 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import ratingMixin from "../mixins/getRatingColor";
 
 export default {
+  mixins: [ratingMixin],
   components: {
     Navbar,
   },
@@ -52,10 +54,9 @@ export default {
     };
   },
   methods: {
-    getRatingColor() {
-      if (this.movie.rating > 7) return "#5eb85e";
-      if (this.movie.rating > 4) return "#ffa809";
-      return "#e10505";
+    deleteMovie() {
+      this.$store.dispatch("deleteMovie", parseInt(this.id));
+      this.$router.push("/");
     },
   },
   created() {
